@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>University Resources Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+--primary:#1a3a52;
+--accent:#d4a574;
+--bg:#f5f6f8;
+--card:#ffffff;
+--text:#2c2c2c;
+--border:#e0e0e0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Work Sans',sans-serif;background:var(--bg);color:var(--text)}
+header{background:var(--primary);color:#fff;padding:2rem;text-align:center}
+h1{font-size:2.5rem}
+.container{max-width:1100px;margin:auto;padding:2rem}
+.tabs{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+.tab{padding:.6rem 1rem;border:1px solid var(--border);cursor:pointer;border-radius:6px}
+.tab.active{background:var(--primary);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.card{background:var(--card);padding:1.2rem;border-radius:8px;border:1px solid var(--border)}
+.card h3{font-size:1.2rem;margin-bottom:.5rem}
+.meta{font-size:.85rem;color:#666;margin-bottom:.5rem}
+.desc{font-size:.9rem;margin-bottom:1rem}
+.btn{background:var(--primary);color:#fff;padding:.5rem 1rem;border:none;border-radius:5px;cursor:pointer}
+</style>
+</head>
+<body>
+<header>
+<h1>VLSI Resource Center – VIT University</h1>
+<p>VLSI for VITIANS</p>
+</header>
+<div class="container">
+<div class="tabs">
+<button class="tab active" data="all">All</button>
+<button class="tab" data="papers">Papers</button>
+<button class="tab" data="videos">Videos</button>
+<button class="tab" data="notes">Notes</button>
+<button class="tab" data="manuals">Manuals</button>
+<button class="tab" data="blogs">Blogs</button>
+</div>
+<div id="grid" class="grid"></div>
+</div>
+<script>
+// ONLY ONE SAMPLE PER SECTION
+const resources=[
+{type:'papers',title:'Sample Question Paper',meta:'Semester 4 • 2023',desc:'One sample exam paper for reference.'},
+{type:'videos',title:'Sample Video Lecture',meta:'45 min',desc:'One sample tutorial video.'},
+{type:'notes',title:'Sample Notes',meta:'120 pages',desc:'One sample study material.'},
+{type:'manuals',title:'Sample Lab Manual',meta:'10 experiments',desc:'One sample manual.'},
+{type:'blogs',title:'Sample Blog',meta:'5 min read',desc:'One sample article.'}
+];
+
+function render(type){
+const grid=document.getElementById('grid');
+const data=type==='all'?resources:resources.filter(r=>r.type===type);
+grid.innerHTML=data.map(r=>`
+<div class="card">
+<h3>${r.title}</h3>
+<div class="meta">${r.meta}</div>
+<div class="desc">${r.desc}</div>
+<button class="btn">Open</button>
+</div>`).join('');
+}
+
+// tabs
+document.querySelectorAll('.tab').forEach(t=>{
+t.onclick=()=>{
+document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+t.classList.add('active');
+render(t.getAttribute('data'));
+}
+});
+
+render('all');
+</script>
+</body>
+</html>
